@@ -2,7 +2,8 @@ const chai = require('chai');
 const expect = chai.expect; 
 require('mocha-sinon');
 // Object.assign(global, require('../src/hoffy.js'));
-Object.assign(global, require('./hoffy-moar.js'));
+// Object.assign(global, require('src/hoffy-moar.js'));
+Object.assign(global, require('../src/hoffy.js'));
 
 // use to test console output while still allowing console.log
 // to _actually_ output to screen
