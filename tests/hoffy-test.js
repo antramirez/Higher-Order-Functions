@@ -1,5 +1,5 @@
 const chai = require('chai');
-const expect = chai.expect; 
+const expect = chai.expect;
 require('mocha-sinon');
 // Object.assign(global, require('../src/hoffy.js'));
 // Object.assign(global, require('src/hoffy-moar.js'));
@@ -44,7 +44,7 @@ describe('hoffy', function() {
 
     describe('maybe', function() {
         function createFullName(firstName, lastName) {
-            return `${firstName} ${lastName}`; 
+            return `${firstName} ${lastName}`;
         }
         it('creates a new function that calls the old function and returns the old functions value', function() {
             expect(maybe(createFullName)('Frederick', 'Functionstein')).to.be.equal('Frederick Functionstein');
@@ -56,7 +56,7 @@ describe('hoffy', function() {
     });
 
     describe('filterWith', function() {
-        function even(x) { 
+        function even(x) {
             return x % 2 === 0;
         }
         it('turns a function that returns a boolean into a function that filters an Array', function() {
@@ -64,7 +64,7 @@ describe('hoffy', function() {
             expect(filterWithEven([1, 2, 3, 4])).to.eql([2, 4]);
         });
     });
- 
+
     describe('constrainDecorator', function() {
 
         it('returns a function that calls the original function ... and allows the return value of the original function to be returned without modification if it is between (inclusive) min and max', function() {
@@ -155,5 +155,3 @@ describe('hoffy', function() {
 
     })
 });
-
-
