@@ -22,7 +22,8 @@ fs.readFile('/Users/aramirez/Desktop/NYU/Year 4/Fall/AIT/hw/DOHMH_Dog_Bite_Data.
       // trim white space
       allBites[i].trim();
       // split allBites element by comma
-      allBites[i] = allBites[i].split(",");
+      /* regex taken from https://stackoverflow.com/questions/23582276/split-string-by-comma-but-ignore-commas-inside-quotes/23582323*/
+      allBites[i] = allBites[i].split(/,(?![^"]*"(?:(?:[^"]*"){2})*[^"]*$)/);
 
       // fill biteObjs array with objects containing data from allBites
       bitesObjs[i] = {
@@ -39,15 +40,15 @@ fs.readFile('/Users/aramirez/Desktop/NYU/Year 4/Fall/AIT/hw/DOHMH_Dog_Bite_Data.
         // string - m/f/u
         "Gender": allBites[i][5],
         // boolean - t/f
-        "spayNeuter": allBites[i][6],
+        "SpayNeuter": allBites[i][6],
         // string - 1 of 5
-        "borough": allBites[i][7],
+        "Borough": allBites[i][7],
         // integer - zip code
-        "zipCode": allBites[i][8],
+        "ZipCode": allBites[i][8],
       }
       // console.log(bitesObjs[i]);
     }
     // process data
-    bitefunc.processBiteData(bitesObjs);
+    console.log(bitefunc.processBiteData(bitesObjs));
   }
 });
