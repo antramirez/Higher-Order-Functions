@@ -1,5 +1,26 @@
 // bitefunc.js
 
+// custom sort function to compare counts
+function sortCount(obj1, obj2) {
+  if (obj1.Count < obj2.Count) {return -1;}
+  if (obj1.Count > obj2.Count) {return 1;}
+  return 0;
+}
+
+// function to capitalize first letter in string
+function firstLetterUpper(str) {
+  // split string into array
+  const strArr = str.split(' ');
+  for (let i = 0; i < strArr.length; i++) {
+    // make sure array doesn't contain '/' if breed a sub breed like Mix
+    if (strArr !== '/') {
+      // capitalize first letter and add rest of string
+      strArr[i] = strArr[i].charAt(0).toUpperCase() + strArr[i].slice(1);
+    }
+  }
+  // join array with spaces to make it a string again
+  return strArr.join(' ');
+}
 function processBiteData(bites){
   // final report string
   let output = "";
@@ -7,23 +28,22 @@ function processBiteData(bites){
   let ages = [];
   let agesSum = 0;
   let avgAge = 0;
-  
-  let spayNeutValid = [];
+
+  const spayNeutValid = [];
   let spayNeut = [];
-  let spayNeutPecent = 0;
 
   // most chompy breeds
-  let breedBites = [];
-  let breedObjs = [];
+  const breedBites = [];
+  const breedObjs = [];
 
   // most chompy boroughs
-  let boroughs = [];
-  let boroughObjs = [];
+  const boroughs = [];
+  const boroughObjs = [];
 
   // most chompy months
-  let monthsArr = [];
-  let yearsArr = [];
-  let monthObjs = [];
+  const monthsArr = [];
+  const yearsArr = [];
+  const monthObjs = [];
 
   // validate data
   bites.forEach(function(bite) {
@@ -46,13 +66,13 @@ function processBiteData(bites){
     }
 
     // zip codes should be integers
-    if (!isNaN(bite.zipCode)) {
-      bite.zipCode = parseInt(bite.zipCode, 10);
+    if (!isNaN(bite.ZipCode)) {
+      bite.ZipCode = parseInt(bite.ZipCode, 10);
     }
   });
 
   // convert every valid age from string to integer using array map
-  ages = ages.map(age =>  age = parseInt(age,10));
+  ages = ages.map(age => age = parseInt(age,10));
 
   // use reduce to sum up all ages
   agesSum = ages.reduce((acc, curr) => acc + curr, 0);
@@ -68,9 +88,7 @@ function processBiteData(bites){
       // make sure breed is not undefined or empty
       if (bites[i].Breed !== '' && bites[i].Breed !== undefined && bites[i].Breed.toUpperCase() !== 'UNKNOWN') {
         // make breed string lower case and get rid of extra quotes
-        const breedToLower = bites[i].Breed.toLowerCase().replace(/\"/g, "");
-
-        // bites[i].Breed = breedToLower;
+        const breedToLower = bites[i].Breed.toLowerCase().replace(/"/g, "");
 
         // check if breedToLower has been seen before
         if (breedBites.includes(breedToLower)) {
@@ -119,7 +137,7 @@ function processBiteData(bites){
         // make unique year array (to be used to find how many years are used)
         if (y !== undefined && y !== '') {
           if (!yearsArr.includes(y)) {
-            yearsArr.push(y)
+            yearsArr.push(y);
           }
         }
         // check if month has been seen before
@@ -134,7 +152,7 @@ function processBiteData(bites){
           // add month to distinct month array and month object to array
           // if month has not been been seen before
           monthsArr.push(m);
-          monthObjs.push({"Month": m, "Count": 1})
+          monthObjs.push({"Month": m, "Count": 1});
         }
       }
   }
@@ -165,35 +183,13 @@ function processBiteData(bites){
 
   output += '\nThe top three months for dog biting are ';
   for (let i = 0; i < 3; i++) {
-    if (i == 2) {
-      output += 'and ' + monthObjs[monthObjs.length - 1 - i].Month + '.';
+    if (i === 2) {
+      output += 'and ' + monthObjs[monthObjs.length - 1 - i].Month + '.\n';
     } else {
       output += monthObjs[monthObjs.length - 1 - i].Month + ', ';
     }
   }
   return output;
-}
-
-// custom sort function to compare counts
-function sortCount(obj1, obj2) {
-  if (obj1.Count < obj2.Count) {return -1;}
-  if (obj1.Count > obj2.Count) {return 1;}
-  return 0;
-}
-
-// function to capitalize first letter in string
-function firstLetterUpper(str) {
-  // split string into array
-  let strArr = str.split(' ');
-  for (let i = 0; i < strArr.length; i++) {
-    // make sure array doesn't contain '/' if breed a sub breed like Mix
-    if (strArr !== '/') {
-      // capitalize first letter and add rest of string
-      strArr[i] = strArr[i].charAt(0).toUpperCase() + strArr[i].slice(1);
-    }
-  }
-  // join array with spaces to make it a string again
-  return strArr.join(' ');
 }
 
 // export function in module
